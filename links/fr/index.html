@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!-- Set language to French -->
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO and Meta Tags (Translated) -->
+    <title>Centre de Liens | Dotlyne</title>
+    <meta name="description" content="Liens officiels pour Dotlyne. Découvrez la dernière collection, suivez-nous sur les réseaux sociaux, suivez votre commande et contactez-nous. Rayonnez de Confiance.">
+    <meta name="keywords" content="Dotlyne, marque de vêtements, streetwear, mode, liens, boutique, suivi de commande, contact">
+    <meta name="author" content="Dotlyne">
+    <link rel="canonical" href="https://byautry.com/dotlyne/fr/">
+    <meta name="robots" content="index, follow">
+
+    <!-- Favicon Links (Corrected path) -->
+    <link rel="icon" href="../favicon.ico" sizes="any">
+    <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+
+    <!-- Open Graph (Translated) -->
+    <meta property="og:title" content="Dotlyne | Liens Officiels">
+    <meta property="og:description" content="Découvrez la collection, suivez notre aventure et suivez votre commande.">
+    <meta property="og:image" content="https://byautry.com/dotlyne/assets/img/link-preview-fr.jpg"> <!-- Consider creating a French preview image -->
+    <meta property="og:url" content="https://byautry.com/dotlyne/fr/">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card (Translated) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Dotlyne | Liens Officiels">
+    <meta name="twitter:description" content="Découvrez la collection, suivez notre aventure et suivez votre commande.">
+    <meta name="twitter:image" content="https://byautry.com/dotlyne/assets/img/link-preview-fr.jpg">
+    
+    <!-- Google Fonts: Poppins, Inter, and CAIRO for Arabic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+    
+    <!-- intl-tel-input library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
+
+    <!-- Corrected path to stylesheet -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+    <!-- Preloader (Translated) -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo"></div>
+            <p class="preloader-motto">Rayonnez de Confiance.</p>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo-container">
+            <div id="logo" class="unstealable-logo" role="img" aria-label="Dotlyne Logo"></div>
+            <p class="motto">Rayonnez de Confiance.</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="links-container">
+            <!-- Link Cards (Translated) -->
+            <a href="https://byautry.com/dotlyne/shop" target="_blank" class="link-card">
+                <img src="../assets/img/shop-online.jpg" alt="Boutique en ligne">
+                <span>Boutique en Ligne</span>
+            </a>
+            <a href="https://instagram.com/bydotlyne" target="_blank" class="link-card">
+                <img src="../assets/img/instagram.jpg" alt="Dotlyne sur Instagram">
+                <span>Instagram</span>
+            </a>
+            <a href="#" id="track-order-trigger" class="link-card">
+                <img src="../assets/img/track-order.png" alt="Suivre ma commande">
+                <span>Suivre ma Commande</span>
+            </a>
+            <a href="https://ig.me/m/bydotlyne" target="_blank" class="link-card">
+                <img src="../assets/img/send-message.png" alt="Contactez-nous">
+                <span>Envoyer un Message</span>
+            </a>
+        </div>
+    </main>
+
+    <!-- TRACKING MODAL (Translated) -->
+    <div id="tracking-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="close-button">&times;</button>
+            <h2>Suivi de commande : Veuillez nous fournir les détails nécessaires.</h2>
+            <form id="tracking-form">
+                <div class="form-group-split">
+                    <div class="form-group">
+                        <label for="first-name">Prénom</label>
+                        <input type="text" id="first-name" placeholder="Quel est votre prénom ?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Nom</label>
+                        <input type="text" id="last-name" placeholder="Et votre nom de famille ?" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Adresse e-mail</label>
+                    <input type="email" id="email" placeholder="E-mail utilisé pour la commande" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Numéro de téléphone</label>
+                    <input type="tel" id="phone" placeholder="Numéro utilisé pour la commande" required>
+                </div>
+                <div class="form-group">
+                    <label for="order-number">Mon numéro de commande</label>
+                    <div class="order-number-wrapper">
+                        <input type="text" id="order-number" placeholder="Numéro de commande envoyé e-mail ou par message texte" required>
+                    </div>
+                </div>
+                <div class="form-group-checkbox">
+                    <input type="checkbox" id="lost-order-number">
+                    <label for="lost-order-number">J'ai perdu mon numéro de commande</label>
+                </div>
+                <button type="submit" id="continue-button" disabled>Continuer</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <!-- Language Toggles -->
+        <div class="lang-toggle-container">
+            <button class="lang-button" data-lang="en">EN</button>
+            <button class="lang-button" data-lang="ar">ع</button>
+        </div>
+        <p id="copyright"></p>
+    </footer>
+
+    <!-- Corrected path to script -->
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>

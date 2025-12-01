@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dotlyne | Radiate Confidence</title>
+    
+    <!-- Meta, Fonts, etc. -->
+    <meta name="description" content="Official website for Dotlyne. Shop the latest collection of streetwear and fashion that inspires you to radiate confidence.">
+    <link rel="canonical" href="https://byautry.com/dotlyne/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <div class="hamburger" id="hamburger-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+
+    <header class="main-header">
+        <nav class="navbar">
+            <a href="/" class="logo-link">
+                <div id="logo" class="unstealable-logo" role="img" aria-label="Dotlyne Logo"></div>
+                <span class="logo-tagline">Radiate Confidence</span>
+            </a>
+            <div class="icon-links">
+                <a href="#" class="icon-link" id="search-icon" aria-label="Search"><i class="fas fa-search"></i></a>
+                <a href="#" class="icon-link" id="account-icon" aria-label="My Account"><i class="fas fa-user"></i></a>
+                <a href="/wishlist" class="icon-link" id="wishlist-icon" aria-label="Wishlist"><i class="fas fa-heart"></i></a>
+                <a href="#" class="icon-link" id="cart-icon" aria-label="Shopping Bag"><i class="fas fa-shopping-bag"></i></a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MODIFIED: Fullscreen menu now contains both mobile and desktop social icons -->
+    <div class="fullscreen-menu" id="fullscreen-menu">
+        <div class="vertical-copyright" id="vertical-copyright"></div>
+        
+        <div class="mobile-menu-header">
+            <div class="mobile-search-bar">
+                <input type="text" placeholder="Search...">
+                <button aria-label="Search"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+        
+        <div class="menu-nav">
+            <div class="menu-category">
+                <div class="menu-category-header">
+                    <a href="/shop/shirts/" class="category-main-link">Shirts</a>
+                    <button class="dropdown-toggle" aria-expanded="false" aria-controls="shirts-dropdown">+</button>
+                </div>
+                <div class="dropdown-content" id="shirts-dropdown">
+                    <a href="/shop/shirts/tshirts/">T-Shirt</a>
+                    <a href="/shop/shirts/polo/">Polo</a>
+                    <a href="/shop/shirts/longsleeve/">Long Sleeve</a>
+                </div>
+            </div>
+            <div class="menu-category">
+                <div class="menu-category-header">
+                    <a href="/shop/hoodies/" class="category-main-link">Hoodies</a>
+                    <button class="dropdown-toggle" aria-expanded="false" aria-controls="hoodies-dropdown">+</button>
+                </div>
+                <div class="dropdown-content" id="hoodies-dropdown">
+                    <a href="/shop/hoodies/classic/">Classic</a>
+                    <a href="/shop/hoodies/zipper/">Zipper</a>
+                    <a href="/shop/hoodies/button/">Button</a>
+                </div>
+            </div>
+            <div class="menu-category">
+                <div class="menu-category-header">
+                    <a href="/shop/hats/" class="category-main-link">Hats</a>
+                    <button class="dropdown-toggle" aria-expanded="false" aria-controls="hats-dropdown">+</button>
+                </div>
+                <div class="dropdown-content" id="hats-dropdown">
+                    <a href="/shop/hats/classic/">Classic</a>
+                    <a href="/shop/hats/patch/">Patch</a>
+                    <a href="/shop/hats/beanies/">Beanies</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-social-actions">
+            <a href="/account" aria-label="My Account"><i class="fas fa-user"></i></a>
+            <a href="/wishlist" aria-label="Wishlist"><i class="fas fa-heart"></i></a>
+            <a href="https://instagram.com/bydotlyne" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://youtube.com/@dotlyne" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+
+        <!-- MODIFIED: Desktop social icons moved here -->
+        <div class="desktop-social-actions">
+            <a href="/account" aria-label="My Account"><i class="fas fa-user"></i></a>
+            <a href="https://instagram.com/bydotlyne" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://youtube.com/@dotlyne" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
+    <!-- END MODIFICATION -->
+
+    <div id="search-overlay" class="search-overlay">
+        <button class="close-btn" id="close-search">&times;</button>
+        <div class="search-content">
+            <input type="text" placeholder="Search for products..." class="search-input">
+            <button class="search-submit-btn"><i class="fas fa-search"></i></button>
+        </div>
+    </div>
+
+    <div id="cart-backdrop" class="cart-backdrop"></div>
+    <div id="side-cart" class="side-cart">
+        <div class="cart-header">
+            <div class="cart-header-title">
+                <h2>Your Cart</h2>
+            </div>
+            <button class="close-btn" id="close-cart">&times;</button>
+        </div>
+        <div class="cart-body">
+            <p class="empty-cart-message">Your cart is empty.</p>
+        </div>
+        <div class="cart-footer">
+            <div class="subtotal">
+                <span>Subtotal:</span>
+                <span id="subtotal-amount">$0.00</span>
+            </div>
+            <button class="continue-shopping-btn" id="continue-shopping-btn">Continue Shopping</button>
+            <a href="/checkout" class="checkout-button" id="checkout-button">Go to Checkout</a>
+        </div>
+    </div>
+
+    <h2 class="section-title">Featured</h2>
+    <main class="split-image-section">
+        <div class="split-half left">
+            <img src="assets/img/split-left.jpg" alt="Shop Shirts Collection">
+            <div class="split-content">
+                <h2>Shirts & Hoodies</h2>
+                <a href="#" class="cta-button">Shop Now <i class="fas fa-arrow-right-long"></i></a>
+            </div>
+        </div>
+        <div class="split-half right">
+            <img src="assets/img/split-right.jpg" alt="Shop Hats Collection">
+            <div class="split-content">
+                <h2>Hats & Beanies</h2>
+                <a href="#" class="cta-button">Shop Now <i class="fas fa-arrow-right-long"></i></a>
+            </div>
+        </div>
+    </main>
+
+    <section class="new-arrivals-section">
+        <h2 class="section-title">New Arrivals</h2>
+        <div class="arrivals-container">
+            <div class="arrival-item">
+                <img src="assets/img/athletic-gear.jpg" alt="New Arrival 1">
+                <a href="#" class="cta-button-overlay">Shop Now</a>
+            </div>
+            <div class="arrival-item">
+                <img src="assets/img/running-shoes.jpg" alt="New Arrival 2">
+                <a href="#" class="cta-button-overlay">Shop Now</a>
+            </div>
+            <div class="arrival-item">
+                <img src="assets/img/swim-gear.jpg" alt="New Arrival 3">
+                <a href="#" class="cta-button-overlay">Shop Now</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="spotlight-section">
+        <h2 class="section-title">Spotlight</h2>
+        <div class="spotlight-grid">
+            <!-- Repeat this item structure 9 times -->
+            <div class="spotlight-item">
+                <div class="item-image">
+                    <img src="assets/img/spotlight1.jpg" alt="Spotlight Product 1">
+                    <button class="favorite-btn" aria-label="Favorite"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="item-details">
+                    <h3>Classic Tee</h3>
+                    <p class="price">$29.99</p>
+                </div>
+                <div class="item-actions">
+                    <div class="size-selector">
+                        <button class="size-option">S</button>
+                        <button class="size-option">M</button>
+                        <button class="size-option active">L</button>
+                        <button class="size-option">XL</button>
+                        <button class="size-option">XXL</button>
+                    </div>
+                    <span class="add-to-cart-text">Add to Cart</span>
+                    <a href="#" class="view-item-btn" aria-label="View item in new tab" target="_blank">
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="spotlight-item">
+                <div class="item-image">
+                    <img src="assets/img/spotlight2.jpg" alt="Spotlight Product 2">
+                    <button class="favorite-btn" aria-label="Favorite"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="item-details">
+                    <h3>Urban Hoodie</h3>
+                    <p class="price">$79.99</p>
+                </div>
+                <div class="item-actions">
+                    <div class="size-selector">
+                        <button class="size-option">S</button>
+                        <button class="size-option">M</button>
+                        <button class="size-option active">L</button>
+                        <button class="size-option">XL</button>
+                        <button class="size-option">XXL</button>
+                    </div>
+                    <span class="add-to-cart-text">Add to Cart</span>
+                    <a href="#" class="view-item-btn" aria-label="View item in new tab" target="_blank">
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="spotlight-item">
+                <div class="item-image">
+                    <img src="assets/img/spotlight3.jpeg" alt="Spotlight Product 3">
+                    <button class="favorite-btn" aria-label="Favorite"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="item-details">
+                    <h3>Signature Cap</h3>
+                    <p class="price">$24.99</p>
+                </div>
+                <div class="item-actions">
+                    <div class="size-selector">
+                        <button class="size-option">S</button>
+                        <button class="size-option">M</button>
+                        <button class="size-option active">L</button>
+                        <button class="size-option">XL</button>
+                        <button class="size-option">XXL</button>
+                    </div>
+                    <span class="add-to-cart-text">Add to Cart</span>
+                    <a href="#" class="view-item-btn" aria-label="View item in new tab" target="_blank">
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="spotlight-item">
+                <div class="item-image">
+                    <img src="assets/img/spotlight4.jpg" alt="Spotlight Product 4">
+                    <button class="favorite-btn" aria-label="Favorite"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="item-details">
+                    <h3>Long Sleeve</h3>
+                    <p class="price">$39.99</p>
+                </div>
+                <div class="item-actions">
+                    <div class="size-selector">
+                        <button class="size-option">S</button>
+                        <button class="size-option">M</button>
+                        <button class="size-option active">L</button>
+                        <button class="size-option">XL</button>
+                        <button class="size-option">XXL</button>
+                    </div>
+                    <span class="add-to-cart-text">Add to Cart</span>
+                    <a href="#" class="view-item-btn" aria-label="View item in new tab" target="_blank">
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="spotlight-item">
+                <div class="item-image">
+                    <img src="assets/img/spotlight5.jpg" alt="Spotlight Product 5">
+                    <button class="favorite-btn" aria-label="Favorite"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="item-details">
+                    <h3>Zipper Hoodie</h3>
+                    <p class="price">$84.99</p>
+                </div>
+                <div class="item-actions">
+                    <div class="size-selector">
+                        <button class="size-option">S</button>
+                        <button class="size-option">M</button>
+                        <button class="size-option active">L</button>
+                        <button class="size-option">XL</button>
+                        <button class="size-option">XXL</button>
+                    </div>
+                    <span class="add-to-cart-text">Add to Cart</span>
+                    <a href="#" class="view-item-btn" aria-label="View item in new tab" target="_blank">
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="spotlight-item">
+                <div class="item-image">
+                    <img src="assets/img/spotlight6.jpg" alt="Spotlight Product 6">
+                    <button class="favorite-btn" aria-label="Favorite"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="item-details">
+                    <h3>Patch Beanie</h3>
+                    <p class="price">$22.99</p>
+                </div>
+                <div class="item-actions">
+                    <div class="size-selector">
+                        <button class="size-option">S</button>
+                        <button class="size-option">M</button>
+                        <button class="size-option active">L</button>
+                        <button class="size-option">XL</button>
+                        <button class="size-option">XXL</button>
+                    </div>
+                    <span class="add-to-cart-text">Add to Cart</span>
+                    <a href="#" class="view-item-btn" aria-label="View item in new tab" target="_blank">
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="spotlight-item">
+                <div class="item-image">
+                    <img src="assets/img/spotlight7.jpg" alt="Spotlight Product 7">
+                    <button class="favorite-btn" aria-label="Favorite"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="item-details">
+                    <h3>Graphic Tee</h3>
+                    <p class="price">$34.99</p>
+                </div>
+                <div class="item-actions">
+                    <div class="size-selector">
+                        <button class="size-option">S</button>
+                        <button class="size-option">M</button>
+                        <button class="size-option active">L</button>
+                        <button class="size-option">XL</button>
+                        <button class="size-option">XXL</button>
+                    </div>
+                    <span class="add-to-cart-text">Add to Cart</span>
+                    <a href="#" class="view-item-btn" aria-label="View item in new tab" target="_blank">
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="spotlight-item">
+                <div class="item-image">
+                    <img src="assets/img/spotlight8.jpg" alt="Spotlight Product 8">
+                    <button class="favorite-btn" aria-label="Favorite"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="item-details">
+                    <h3>Polo Shirt</h3>
+                    <p class="price">$49.99</p>
+                </div>
+                <div class="item-actions">
+                    <div class="size-selector">
+                        <button class="size-option">S</button>
+                        <button class="size-option">M</button>
+                        <button class="size-option active">L</button>
+                        <button class="size-option">XL</button>
+                        <button class="size-option">XXL</button>
+                    </div>
+                    <span class="add-to-cart-text">Add to Cart</span>
+                    <a href="#" class="view-item-btn" aria-label="View item in new tab" target="_blank">
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="spotlight-item">
+                <div class="item-image">
+                    <img src="assets/img/spotlight9.jpg" alt="Spotlight Product 9">
+                    <button class="favorite-btn" aria-label="Favorite"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="item-details">
+                    <h3>Velcro Hat</h3>
+                    <p class="price">$27.99</p>
+                </div>
+                <div class="item-actions">
+                    <div class="size-selector">
+                        <button class="size-option">S</button>
+                        <button class="size-option">M</button>
+                        <button class="size-option active">L</button>
+                        <button class="size-option">XL</button>
+                        <button class="size-option">XXL</button>
+                    </div>
+                    <span class="add-to-cart-text">Add to Cart</span>
+                    <a href="#" class="view-item-btn" aria-label="View item in new tab" target="_blank">
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- End of repeated item -->
+        </div>
+    </section>
+
+    <h2 class="section-title">Stories</h2>
+    <section class="carousel-container" aria-label="Showcase">
+        <div class="carousel-slides">
+            <div class="carousel-slide">
+                <img src="assets/img/read.png" alt="Dotlyne collection">
+                <div class="slide-content">
+                    <h1>Radiate Confidence</h1>
+                    <p>Discover the latest in streetwear. Designed for the bold.</p>
+                    <a href="/dotlyne/shop" class="cta-button">3 minute read <i class="fas fa-arrow-right-long"></i></a>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <!-- <video autoplay muted loop playsinline src="assets/vid/carousel-video.mp4" aria-label="Promotional video for Dotlyne"></video> -->
+                 <img src="assets/img/background.jpg" alt="Dotlyne collection">
+                 <div class="slide-content">
+                    <h1>Autumn/Winter '25</h1>
+                    <p>Unveiling our most anticipated collection yet.</p>
+                    <a href="#" class="cta-button">4 minute read <i class="fas fa-arrow-right-long"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-controls">
+            <button class="control-btn prev-btn" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button>
+            <button class="control-btn next-btn" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-left">
+            <img src="assets/img/cccl.png" alt="Children's Cancer Center of Lebanon Logo" class="cccl-logo">
+            <p class="donation-message">We pledge 1% of every purchase to the Children's Cancer Center of Lebanon (CCCL).</p>
+        </div>
+        <p id="copyright"></p>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO and Meta Tags -->
+    <title>Links Center | Dotlyne</title>
+    <meta name="description" content="Official links for Dotlyne. Shop the latest collection, follow on social media, track your order, and get in touch. Radiate Confidence.">
+    <meta name="keywords" content="Dotlyne, clothing brand, streetwear, fashion, links, shop, track order, contact">
+    <meta name="author" content="Dotlyne">
+    <link rel="canonical" href="https://byautry.com/dotlyne/links">
+    <meta name="robots" content="index, follow">
+
+    <!-- Favicon Links (replace with your actual favicon files) -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Open Graph / Facebook / Instagram Meta Tags -->
+    <meta property="og:title" content="Dotlyne | Official Links">
+    <meta property="og:description" content="Shop the collection, follow our journey, and track your order.">
+    <meta property="og:image" content="https://byautry.com/dotlyne/assets/img/link-preview.jpg">
+    <meta property="og:url" content="https://byautry.com/dotlyne/links">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Dotlyne | Official Links">
+    <meta name="twitter:description" content="Shop the collection, follow our journey, and track your order.">
+    <meta name="twitter:image" content="https://byautry.com/dotlyne/assets/img/link-preview.jpg">
+    
+    <!-- Google Fonts: Poppins for headings, Inter for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+    
+    <!-- intl-tel-input library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <!-- ======== NEW PRELOADER SCREEN ======== -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo"></div>
+            <p class="preloader-motto">Radiate Confidence.</p>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo-container">
+            <div id="logo" class="unstealable-logo" role="img" aria-label="Dotlyne Logo"></div>
+            <p class="motto">Radiate Confidence.</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="links-container">
+            <!-- Link Cards -->
+            <a href="https://byautry.com/dotlyne/" target="_blank" class="link-card">
+                <img src="assets/img/shop-online.jpg" alt="Shop Online">
+                <span>Shop Online</span>
+            </a>
+            <a href="https://instagram.com/bydotlyne" target="_blank" class="link-card">
+                <img src="assets/img/instagram.jpg" alt="Dotlyne on Instagram">
+                <span>Instagram</span>
+            </a>
+            <a href="#" id="track-order-trigger" class="link-card">
+                <img src="assets/img/track-order.png" alt="Track My Order">
+                <span>Track My Order</span>
+            </a>
+            <a href="https://ig.me/m/bydotlyne" target="_blank" class="link-card">
+                <img src="assets/img/send-message.png" alt="Contact Us">
+                <span>Send a Message</span>
+            </a>
+        </div>
+    </main>
+
+    <!-- TRACKING MODAL -->
+    <div id="tracking-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="close-button">&times;</button>
+            <h2>Track Order: Kindly provide us with the necessary details.</h2>
+            <form id="tracking-form">
+                <div class="form-group-split">
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" placeholder="What's your first name?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" placeholder="And your last name?" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Email used to place your order" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="Phone number used to place your order" required>
+                </div>
+                <div class="form-group">
+                    <label for="order-number">Order Number</label>
+                    <div class="order-number-wrapper">
+                        <input type="text" id="order-number" placeholder="Order number sent by email or text" required>
+                    </div>
+                </div>
+                <div class="form-group-checkbox">
+                    <input type="checkbox" id="lost-order-number">
+                    <label for="lost-order-number">I lost my order number</label>
+                </div>
+                <button type="submit" id="continue-button" disabled>Continue</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="lang-toggle-container">
+            <button class="lang-button" data-lang="ar">ع</button>
+            <button class="lang-button" data-lang="fr">FR</button>
+        </div>
+        <p id="copyright"></p>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
