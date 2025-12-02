@@ -7,7 +7,7 @@
     
     <!-- Meta, Fonts, etc. -->
     <meta name="description" content="Official website for Dotlyne. Shop the latest collection of streetwear and fashion that inspires you to radiate confidence.">
-    <link rel="canonical" href="https://byautry.com/dotlyne/">
+    <link rel="canonical" href="https://dotlyne.byautry.com">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -15,7 +15,1228 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        /* ===============================================
+           GLOBAL STYLES & CSS VARIABLES
+           =============================================== */
+        :root {
+            --color-primary: #000000;
+            --color-secondary: #333333;
+            --color-background: #ffffff;
+            --color-light-gray: #f4f4f4;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --font-heading: 'Poppins', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --header-height: 70px;
+            --container-padding: 0 5%;
+            --main-gap: 20px;
+            --section-side-padding: 5%;
+            --whatsapp-green: #25D366;
+            --disabled-gray: #cccccc;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--color-secondary);
+            margin: 0;
+        }
+
+        body.no-scroll {
+            overflow: hidden;
+        }
+
+        /* ===============================================
+           HEADER & NAVIGATION BAR
+           =============================================== */
+        .main-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: var(--color-background);
+            box-shadow: 0 2px 5px var(--shadow-color);
+            padding: var(--container-padding);
+        }
+        .navbar {
+            position: relative;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            height: var(--header-height);
+        }
+        .logo-link {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+        }
+        #logo.unstealable-logo {
+            width: 160px;
+            height: 55px;
+            background: url('assets/img/logo.svg') no-repeat center center;
+            background-size: contain;
+        }
+        
+        .logo-tagline {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            color: var(--color-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: -3px;
+            font-weight: 600;
+        }
+        .icon-links {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 1.8rem;
+        }
+        .icon-link {
+            font-size: 1.4rem;
+            color: var(--color-secondary);
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        .icon-link:hover {
+            color: var(--color-primary);
+        }
+        
+        /* Cart Badge */
+        #cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--color-primary);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: bold;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        #cart-count.visible {
+            opacity: 1;
+        }
+
+        /* ===============================================
+           HAMBURGER MENU
+           =============================================== */
+        .hamburger {
+            position: fixed;
+            top: 18px;
+            left: calc(5% + 10px);
+            z-index: 2000;
+            display: flex;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 8px;
+            padding: 10px;
+            border: none;
+            background: transparent;
+        }
+        .hamburger .bar {
+            width: 28px;
+            height: 3px;
+            background-color: var(--color-primary);
+            border-radius: 3px;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), 
+                        background-color 0.4s ease;
+        }
+        .hamburger.active .bar {
+            background-color: var(--color-background);
+        }
+        .hamburger.active .bar:nth-child(1) {
+            transform: translateY(5.5px) rotate(45deg);
+        }
+        .hamburger.active .bar:nth-child(2) {
+            transform: translateY(-5.5px) rotate(-45deg);
+        }
+
+        /* ===============================================
+           FULLSCREEN MENU
+           =============================================== */
+        .fullscreen-menu {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background-color: var(--color-primary);
+            z-index: 1500;
+            display: flex;
+            flex-direction: row;
+            justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            overflow-y: auto;
+        }
+        .fullscreen-menu.menu-open { opacity: 1; visibility: visible; }
+        .menu-category-header, .dropdown-content a {
+            opacity: 0; transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .fullscreen-menu.menu-open .menu-category-header, .fullscreen-menu.menu-open .dropdown-content a {
+            opacity: 1; transform: translateY(0);
+        }
+        /* Staggered animation delays */
+        .fullscreen-menu.menu-open .menu-category:nth-child(1) .menu-category-header { transition-delay: 0.3s; }
+        .fullscreen-menu.menu-open .menu-category:nth-child(1) .dropdown-content a:nth-of-type(1) { transition-delay: 0.4s; }
+        .fullscreen-menu.menu-open .menu-category:nth-child(1) .dropdown-content a:nth-of-type(2) { transition-delay: 0.5s; }
+        .fullscreen-menu.menu-open .menu-category:nth-child(1) .dropdown-content a:nth-of-type(3) { transition-delay: 0.6s; }
+        .fullscreen-menu.menu-open .menu-category:nth-child(2) .menu-category-header { transition-delay: 0.7s; }
+        .fullscreen-menu.menu-open .menu-category:nth-child(2) .dropdown-content a:nth-of-type(1) { transition-delay: 0.8s; }
+        .fullscreen-menu.menu-open .menu-category:nth-child(2) .dropdown-content a:nth-of-type(2) { transition-delay: 0.9s; }
+        .fullscreen-menu.menu-open .menu-category:nth-child(2) .dropdown-content a:nth-of-type(3) { transition-delay: 1.0s; }
+        .fullscreen-menu.menu-open .menu-category:nth-child(3) .menu-category-header { transition-delay: 1.1s; }
+        .fullscreen-menu.menu-open .menu-category:nth-child(3) .dropdown-content a:nth-of-type(1) { transition-delay: 1.2s; }
+        .fullscreen-menu.menu-open .menu-category:nth-child(3) .dropdown-content a:nth-of-type(2) { transition-delay: 1.3s; }
+        .fullscreen-menu.menu-open .menu-category:nth-child(3) .dropdown-content a:nth-of-type(3) { transition-delay: 1.4s; }
+
+        .vertical-copyright {
+            position: absolute; left: 40px; top: 50%;
+            writing-mode: vertical-rl; transform: rotate(180deg) translateY(50%);
+            color: rgba(255, 255, 255, 0.5); font-size: 0.9rem; letter-spacing: 2px;
+        }
+        .menu-nav {
+            display: flex;
+            gap: 6rem;
+            text-align: center;
+            width: 80%;
+            justify-content: center;
+        }
+        .menu-category {
+            flex: 1;
+            min-width: 250px;
+        }
+        .menu-category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        a.category-main-link {
+            font-family: var(--font-heading);
+            color: var(--color-background);
+            text-decoration: none;
+            font-size: 2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+        a.category-main-link:hover {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .dropdown-toggle {
+            background: none;
+            border: 2px solid var(--color-background);
+            color: var(--color-background);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 2rem;
+            line-height: 36px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .menu-category.is-open .dropdown-toggle {
+            transform: rotate(45deg);
+        }
+        .dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .menu-category.is-open .dropdown-content {
+            max-height: 300px;
+        }
+        .dropdown-content a {
+            position: relative;
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+            font-family: var(--font-heading);
+            padding-bottom: 10px;
+        }
+        .dropdown-content a:hover {
+            color: var(--color-background);
+        }
+        .mobile-menu-header, .mobile-social-actions, .desktop-social-actions {
+            display: none;
+        }
+
+        /* ===============================================
+           SEARCH OVERLAY & SIDE CART
+           =============================================== */
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: none;
+            border: none;
+            font-size: 3rem;
+            color: var(--color-secondary);
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        /* Search Overlay */
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            z-index: 2500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .search-overlay.is-active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .search-overlay .close-btn {
+            color: var(--color-secondary);
+        }
+        .search-content {
+            display: flex;
+            width: 80%;
+            max-width: 600px;
+            border-bottom: 2px solid var(--color-primary);
+        }
+        .search-input {
+            border: none;
+            background: none;
+            width: 100%;
+            font-size: 2rem;
+            padding: 1rem 0;
+            font-family: var(--font-heading);
+            outline: none;
+        }
+        .search-submit-btn {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--color-secondary);
+        }
+
+        /* Side Cart */
+        .cart-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2600;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .cart-backdrop.is-active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .side-cart {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 420px;
+            height: 100%;
+            background-color: var(--color-background);
+            z-index: 2700;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        .side-cart.is-active {
+            transform: translateX(0);
+        }
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--color-light-gray);
+            min-height: 50px;
+        }
+        .cart-header-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cart-header h2 {
+            font-family: var(--font-heading);
+            margin: 0;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+        .cart-header .close-btn {
+            position: static;
+            font-size: 2rem;
+        }
+        
+        /* Cart Views (Main & Checkout) */
+        .cart-view {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+            transition: opacity 0.3s ease;
+        }
+        .cart-view.hidden {
+            display: none;
+            opacity: 0;
+        }
+
+        .cart-body {
+            flex-grow: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+        .empty-cart-message {
+            text-align: center;
+            color: #888;
+            margin-top: 3rem;
+            display: none;
+        }
+        .empty-cart-message.active {
+            display: block;
+        }
+
+        /* Cart Items */
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--color-light-gray);
+            position: relative;
+        }
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border: 1px solid #eee;
+        }
+        .cart-item-details {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .cart-item-details h4 {
+            margin: 0;
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+        }
+        .cart-item-details p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .cart-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 8px;
+        }
+        .qty-control {
+            display: flex;
+            border: 1px solid #ddd;
+        }
+        .qty-btn {
+            background: none;
+            border: none;
+            padding: 2px 8px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .qty-val {
+            padding: 2px 8px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+        }
+        .size-select-cart {
+            padding: 2px 5px;
+            border: 1px solid #ddd;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+        }
+        .remove-item-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+        .remove-item-btn:hover {
+            color: red;
+        }
+
+        /* Cart Footer */
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--color-light-gray);
+            background-color: #fff;
+        }
+        .subtotal {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+        .continue-shopping-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--color-background);
+            color: var(--color-primary);
+            border: 1px solid var(--color-primary);
+            text-align: center;
+            text-decoration: none;
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .continue-shopping-btn:hover {
+            background-color: var(--color-primary);
+            color: var(--color-background);
+        }
+        .checkout-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--color-primary);
+            color: var(--color-background);
+            text-align: center;
+            text-decoration: none;
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+            font-weight: 600;
+            border: none;
+            transition: background-color 0.3s ease;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+        .checkout-button:hover {
+            background-color: var(--color-secondary);
+        }
+        .checkout-button.disabled {
+            background-color: var(--disabled-gray);
+            color: #888888;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
+        /* Checkout Form Styles */
+        .checkout-form-container {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            padding: 0;
+            transition: border-color 0.3s;
+        }
+        .input-wrapper:focus-within {
+            border-color: var(--color-primary);
+        }
+        
+        .country-select {
+            background-color: #eee;
+            border: none;
+            border-right: 1px solid #ccc;
+            padding: 0.8rem 0.5rem;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: #555;
+            max-width: 120px;
+            outline: none;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .country-select:hover {
+            background-color: #e0e0e0;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .form-control:focus {
+            border-color: var(--color-primary);
+        }
+        .input-wrapper .form-control {
+            border: none;
+            flex-grow: 1;
+        }
+        
+        /* Updated Whatsapp Button Styles */
+        .whatsapp-btn {
+            background-color: var(--whatsapp-green);
+            color: white;
+            border: none;
+            transition: background-color 0.3s ease, opacity 0.3s ease;
+        }
+        .whatsapp-btn:hover {
+            background-color: #1ebe57;
+        }
+        .whatsapp-btn.disabled {
+            background-color: var(--disabled-gray);
+            cursor: not-allowed;
+            pointer-events: none;
+            opacity: 0.7;
+            color: #888;
+        }
+
+        .back-to-cart {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-heading);
+            text-decoration: underline;
+            padding: 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .cart-header-title button.back-arrow {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-right: 10px;
+            display: none; /* Shown via JS */
+        }
+
+
+        /* ===============================================
+           GENERIC SECTION TITLE
+           =============================================== */
+        .section-title {
+            text-align: center;
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            margin: 3rem 0 2rem 0;
+            color: var(--color-primary);
+        }
+
+        /* ===============================================
+           SPLIT IMAGE SECTION
+           =============================================== */
+        .split-image-section {
+            display: flex;
+            padding: 0 var(--section-side-padding) var(--main-gap);
+            background-color: #fff;
+        }
+        .split-half {
+            position: relative; flex: 1;
+            height: 70vh; overflow: hidden;
+            border: 1px solid var(--color-primary);
+        }
+        .split-half.left { margin-right: -1px; }
+        .split-half img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .split-half:hover img { transform: scale(1.05); }
+        .split-content {
+            position: absolute; bottom: 10%; left: 50%;
+            transform: translateX(-50%); z-index: 10;
+            color: var(--color-background); text-align: center;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+        }
+        .split-content h2 {
+            font-family: var(--font-heading); font-size: 2.5rem;
+            margin-bottom: 1rem; text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* ===============================================
+           NEW ARRIVALS SECTION
+           =============================================== */
+        .new-arrivals-section {
+            padding: var(--main-gap) var(--section-side-padding) 0;
+        }
+        .arrivals-container {
+            display: flex;
+            gap: var(--main-gap);
+        }
+        .arrival-item {
+            position: relative; flex: 1;
+            border: 1px solid var(--color-primary);
+            overflow: hidden;
+            aspect-ratio: 3 / 4;
+        }
+        .arrival-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .arrival-item:hover img { transform: scale(1.05); }
+        .cta-button-overlay {
+            position: absolute; bottom: 8%; left: 50%;
+            transform: translateX(-50%); z-index: 10;
+            background: rgba(255, 255, 255, 0.9); color: var(--color-primary);
+            padding: 12px 24px; border-radius: 3px;
+            font-family: var(--font-heading); font-size: 0.9rem; font-weight: 600;
+            text-transform: uppercase; text-decoration: none; letter-spacing: 1px;
+            cursor: pointer; text-align: center; white-space: nowrap;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .cta-button-overlay:hover {
+            background-color: var(--color-primary);
+            color: var(--color-background);
+        }
+
+        /* ===============================================
+           SPOTLIGHT SECTION
+           =============================================== */
+        .spotlight-section {
+            padding: var(--main-gap) var(--section-side-padding) 0;
+        }
+        .spotlight-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: var(--main-gap);
+        }
+        .spotlight-item {
+            border: 1px solid var(--color-primary);
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            background-color: #fff;
+        }
+        .item-image {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+        }
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .spotlight-item:hover .item-image img {
+            transform: scale(1.05);
+        }
+        .favorite-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.1rem;
+            color: var(--color-primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .favorite-btn:hover {
+            background-color: var(--color-primary);
+            color: var(--color-background);
+        }
+        .favorite-btn .fas.fa-heart {
+            color: #ff4d4d;
+        }
+        .favorite-btn:hover .fas.fa-heart {
+            color: #ff4d4d;
+        }
+        .item-details {
+            padding: 1rem;
+            flex-grow: 1;
+        }
+        .item-details h3 {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            margin: 0 0 0.5rem 0;
+        }
+        .item-details .price {
+            font-size: 1rem;
+            color: var(--color-secondary);
+            margin: 0;
+        }
+
+        /* --- Item Actions styles --- */
+        .item-actions {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid var(--color-primary);
+            background-color: var(--color-light-gray);
+            min-height: 52px;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .size-selector {
+            display: flex;
+            width: 0;
+            opacity: 0;
+            transition: width 0.4s ease, opacity 0.2s ease 0.1s;
+        }
+        .item-actions:hover .size-selector {
+            width: 225px;
+            opacity: 1;
+        }
+        .size-option {
+            background: none;
+            border: none;
+            border-right: 1px solid #ccc;
+            padding: 1rem 0;
+            width: 45px;
+            flex-shrink: 0;
+            cursor: pointer;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .size-option:hover {
+            background-color: #e0e0e0;
+        }
+        .size-option.active {
+            background-color: var(--color-primary);
+            color: var(--color-background);
+        }
+        .add-to-cart-text {
+            flex-grow: 1;
+            text-align: center;
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            white-space: nowrap;
+            transition: opacity 0.3s ease-in-out;
+            pointer-events: none; /* Let clicks pass to container */
+        }
+        .item-actions.confirmed .add-to-cart-text .fa-check {
+            font-size: 1.2rem;
+            color: var(--color-primary);
+        }
+        .view-item-btn {
+            border-left: 1px solid #ccc;
+            padding: 1rem;
+            font-size: 1.2rem;
+            color: var(--color-secondary);
+            transition: color 0.3s ease;
+        }
+        .view-item-btn:hover {
+            color: var(--color-primary);
+        }
+
+        /* ===============================================
+           CAROUSEL & CTA BUTTONS
+           =============================================== */
+        .carousel-container {
+            position: relative;
+            width: calc(100% - 2 * var(--main-gap));
+            margin: 0 auto;
+            height: 70vh;
+            overflow: hidden;
+            background-color: var(--color-light-gray);
+        }
+        .carousel-slides {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        .carousel-slide {
+            position: relative; flex-shrink: 0;
+            width: 100%; height: 100%;
+        }
+        .carousel-slide img, .carousel-slide video {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .slide-content {
+            position: absolute; bottom: 10%; left: 5%; right: 5%;
+            z-index: 10; color: var(--color-background);
+            text-align: center; text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+        }
+        .slide-content h1 {
+            font-family: var(--font-heading);
+            font-size: 3rem; margin-bottom: 0.5rem;
+        }
+        .slide-content p {
+            font-size: 1.2rem; margin-bottom: 1.5rem;
+        }
+        .cta-button {
+            position: relative; display: inline-flex;
+            align-items: center; gap: 0.75rem;
+            background: none; border: none; padding: 10px 0;
+            font-family: var(--font-heading); font-size: 1rem; font-weight: 600;
+            text-transform: uppercase; text-decoration: none;
+            letter-spacing: 1px; color: var(--color-background);
+            cursor: pointer;
+        }
+        .cta-button i { transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
+        .cta-button:hover i { transform: translateX(10px); }
+        .carousel-controls {
+            position: absolute; bottom: 20px; right: 20px;
+            z-index: 20; display: flex; gap: 10px;
+        }
+        .control-btn {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none; border-radius: 5px;
+            width: 45px; height: 45px;
+            font-size: 1rem; color: var(--color-primary);
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .control-btn:hover {
+            background-color: var(--color-primary);
+            color: var(--color-background);
+        }
+
+        /* ===============================================
+           FOOTER
+           =============================================== */
+        footer {
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 1.5rem;
+            padding: 2.5rem 5% 1.5rem;
+            background-color: var(--color-light-gray);
+            color: var(--color-secondary);
+        }
+        .footer-left {
+            display: flex; align-items: center;
+            gap: 15px;
+        }
+        .cccl-logo {
+            height: 40px; width: auto;
+            flex-shrink: 0;
+        }
+        .donation-message {
+            font-size: 0.78rem; line-height: 1.6;
+            margin: 0; max-width: 600px;
+            text-align: left;
+        }
+        #copyright {
+            font-size: 0.85rem; opacity: 0.7;
+            margin: 0; text-align: right;
+            white-space: nowrap; 
+        }
+
+        /* ===============================================
+           RESPONSIVE DESIGN
+           =============================================== */
+        @media (min-width: 769px) {
+            .desktop-social-actions {
+                display: flex;
+                position: absolute;
+                bottom: 40px;
+                left: 50%;
+                transform: translateX(-50%);
+                gap: 1rem;
+            }
+            .desktop-social-actions a {
+                color: var(--color-background);
+                border: 2px solid var(--color-background);
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                text-decoration: none;
+                transition: background-color 0.3s, color 0.3s;
+            }
+            .desktop-social-actions a:hover {
+                background-color: var(--color-background);
+                color: var(--color-primary);
+            }
+            .desktop-social-actions i {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .item-actions:hover .size-selector {
+                width: 200px;
+            }
+            .size-option {
+                width: 40px;
+                font-size: 0.85rem;
+            }
+            .add-to-cart-text {
+                font-size: 0.85rem;
+            }
+        }
+
+
+        @media (max-width: 992px) {
+            .spotlight-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            #search-icon, #account-icon, #wishlist-icon {
+                display: none;
+            }
+
+            .section-title { font-size: 2rem; }
+
+            .split-image-section {
+                flex-direction: column;
+                padding: 0 var(--section-side-padding);
+                gap: var(--main-gap);
+            }
+            .split-half {
+                margin: 0;
+                aspect-ratio: 4 / 3;
+                height: auto;
+            }
+
+            .new-arrivals-section { padding: var(--main-gap) var(--section-side-padding); }
+            .arrivals-container { flex-direction: column; }
+            .spotlight-section { padding: var(--main-gap) var(--section-side-padding); }
+
+            .carousel-container {
+                width: 100%;
+                margin: 0;
+            }
+            
+            .item-actions {
+                flex-wrap: wrap;
+                cursor: default;
+                min-height: 0;
+            }
+            .item-actions:hover .size-selector,
+            .size-selector {
+                width: 100%;
+                opacity: 1;
+                transition: none;
+            }
+            .size-selector {
+                border-bottom: 1px solid #ccc;
+            }
+            .size-option {
+                flex-grow: 1;
+                width: auto;
+                font-size: 0.9rem;
+            }
+            .size-option:last-of-type {
+                border-right: none;
+            }
+            .add-to-cart-text {
+                padding: 1rem 0;
+                font-size: 0.9rem;
+            }
+            .item-actions:hover .add-to-cart-text {
+                display: block;
+            }
+
+            .view-item-btn {
+                display: none;
+            }
+
+            .fullscreen-menu {
+                flex-direction: column;
+                align-items: center;
+                padding-top: var(--header-height);
+                padding-bottom: 5rem;
+                justify-content: space-between;
+                box-sizing: border-box;
+            }
+            .mobile-menu-header {
+                display: block;
+                width: 90%;
+                padding-bottom: 1.5rem;
+            }
+            .mobile-search-bar {
+                display: flex;
+                width: 100%;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            .mobile-search-bar input {
+                width: 100%;
+                background: none;
+                border: none;
+                color: var(--color-background);
+                font-size: 1rem;
+                padding: 0.75rem 0.5rem;
+                font-family: var(--font-body);
+                outline: none;
+            }
+            .mobile-search-bar input::placeholder {
+                color: rgba(255, 255, 255, 0.5);
+            }
+            .mobile-search-bar button {
+                background: none;
+                border: none;
+                color: var(--color-background);
+                padding: 0 0.5rem 0 1rem;
+                font-size: 1rem;
+                cursor: pointer;
+            }
+            
+            .menu-nav {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+                width: 90%;
+                padding: 0;
+                margin: 2rem 0;
+            }
+            .menu-category-header {
+                justify-content: center;
+                position: relative;
+            }
+            .dropdown-toggle {
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 35px;
+                height: 35px;
+                font-size: 1.5rem;
+                line-height: 32px;
+            }
+            .vertical-copyright { display: none; }
+            
+            .mobile-social-actions {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 1rem;
+                width: 90%;
+                padding-top: 1.5rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            .mobile-social-actions a {
+                color: var(--color-background);
+                border: 2px solid var(--color-background);
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                text-decoration: none;
+                transition: background-color 0.3s, color 0.3s;
+            }
+            .mobile-social-actions a:hover {
+                background-color: var(--color-background);
+                color: var(--color-primary);
+            }
+            .mobile-social-actions i {
+                font-size: 1.5rem;
+            }
+
+            .slide-content h1, .split-content h2 { font-size: 2rem; }
+            .slide-content p { font-size: 1rem; }
+            .carousel-controls { bottom: 15px; right: 15px; }
+            .control-btn { width: 40px; height: 40px; }
+
+            footer {
+                flex-direction: column; justify-content: center;
+                text-align: center;
+            }
+            .footer-left {
+                flex-direction: column; text-align: center;
+            }
+            .donation-message, #copyright {
+                text-align: center;
+            }
+            
+            .menu-category.is-open .dropdown-toggle {
+                transform: translateY(-50%) rotate(45deg);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .spotlight-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+            .size-option {
+                padding: 1rem 0.75rem;
+            }
+            .search-input {
+                font-size: 1.5rem;
+            }
+            .icon-links {
+                gap: 1.5rem;
+            }
+            .icon-link {
+                font-size: 1.3rem;
+            }
+            .country-select {
+                max-width: 90px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #logo.unstealable-logo {
+                width: 130px;
+                height: 45px;
+            }
+            .icon-links {
+                gap: 1.2rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .split-content h2,
+            .slide-content h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -32,14 +1253,14 @@
             </a>
             <div class="icon-links">
                 <a href="#" class="icon-link" id="search-icon" aria-label="Search"><i class="fas fa-search"></i></a>
-                <a href="#" class="icon-link" id="account-icon" aria-label="My Account"><i class="fas fa-user"></i></a>
-                <a href="/wishlist" class="icon-link" id="wishlist-icon" aria-label="Wishlist"><i class="fas fa-heart"></i></a>
-                <a href="#" class="icon-link" id="cart-icon" aria-label="Shopping Bag"><i class="fas fa-shopping-bag"></i></a>
+                <a href="" class="icon-link" id="cart-icon" aria-label="Shopping Bag">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span id="cart-count">0</span>
+                </a>
             </div>
         </nav>
     </header>
 
-    <!-- MODIFIED: Fullscreen menu now contains both mobile and desktop social icons -->
     <div class="fullscreen-menu" id="fullscreen-menu">
         <div class="vertical-copyright" id="vertical-copyright"></div>
         
@@ -87,20 +1308,15 @@
         </div>
 
         <div class="mobile-social-actions">
-            <a href="/account" aria-label="My Account"><i class="fas fa-user"></i></a>
-            <a href="/wishlist" aria-label="Wishlist"><i class="fas fa-heart"></i></a>
             <a href="https://instagram.com/bydotlyne" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             <a href="https://youtube.com/@dotlyne" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
         </div>
 
-        <!-- MODIFIED: Desktop social icons moved here -->
         <div class="desktop-social-actions">
-            <a href="/account" aria-label="My Account"><i class="fas fa-user"></i></a>
             <a href="https://instagram.com/bydotlyne" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             <a href="https://youtube.com/@dotlyne" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
         </div>
     </div>
-    <!-- END MODIFICATION -->
 
     <div id="search-overlay" class="search-overlay">
         <button class="close-btn" id="close-search">&times;</button>
@@ -114,20 +1330,75 @@
     <div id="side-cart" class="side-cart">
         <div class="cart-header">
             <div class="cart-header-title">
-                <h2>Your Cart</h2>
+                <button class="back-arrow" id="back-to-cart-header" aria-label="Back to Cart"><i class="fas fa-arrow-left"></i></button>
+                <h2 id="cart-title">Your Cart</h2>
             </div>
             <button class="close-btn" id="close-cart">&times;</button>
         </div>
-        <div class="cart-body">
-            <p class="empty-cart-message">Your cart is empty.</p>
-        </div>
-        <div class="cart-footer">
-            <div class="subtotal">
-                <span>Subtotal:</span>
-                <span id="subtotal-amount">$0.00</span>
+
+        <!-- View 1: Cart Items -->
+        <div id="cart-view-items" class="cart-view">
+            <div class="cart-body">
+                <p class="empty-cart-message active">Your cart is empty.</p>
+                <div id="cart-items-container">
+                    <!-- Cart items will be injected here via JS -->
+                </div>
             </div>
-            <button class="continue-shopping-btn" id="continue-shopping-btn">Continue Shopping</button>
-            <a href="/checkout" class="checkout-button" id="checkout-button">Go to Checkout</a>
+            <div class="cart-footer">
+                <div class="subtotal">
+                    <span>Subtotal:</span>
+                    <span id="subtotal-amount">$0.00</span>
+                </div>
+                <button class="continue-shopping-btn" id="continue-shopping-btn">Continue Shopping</button>
+                <button class="checkout-button disabled" id="checkout-button">Go to Checkout</button>
+            </div>
+        </div>
+
+        <!-- View 2: Checkout Form -->
+        <div id="cart-view-checkout" class="cart-view hidden">
+            <div class="checkout-form-container">
+                <form id="whatsapp-order-form">
+                    <div class="form-group">
+                        <label for="fullname">Full Name *</label>
+                        <input type="text" id="fullname" class="form-control" placeholder="e.g., John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" class="form-control" placeholder="e.g., yourname@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <div class="input-wrapper">
+                            <!-- Dropdown for country code -->
+                            <select id="country-code-select" class="country-select" required>
+                                <!-- Options populated by JS -->
+                            </select>
+                            <input type="tel" id="phone" class="form-control" placeholder="70 656 471" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City *</label>
+                        <input type="text" id="city" class="form-control" placeholder="e.g., Beirut" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Full Address *</label>
+                        <textarea id="address" class="form-control" rows="3" placeholder="Building, Floor, Street..." required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="cart-footer">
+                <div class="subtotal">
+                    <span>Total:</span>
+                    <span id="checkout-total-amount">$0.00</span>
+                </div>
+                <!-- Added disabled class initially -->
+                <button class="checkout-button whatsapp-btn disabled" id="place-order-btn">
+                    <i class="fab fa-whatsapp"></i> Place Order via Whatsapp
+                </button>
+                <div style="text-align: center; margin-top: 10px;">
+                    <button class="back-to-cart" id="back-to-cart-btn">Back to Cart</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -170,8 +1441,8 @@
     <section class="spotlight-section">
         <h2 class="section-title">Spotlight</h2>
         <div class="spotlight-grid">
-            <!-- Repeat this item structure 9 times -->
-            <div class="spotlight-item">
+            <!-- Data attributes added for JS Cart Logic -->
+            <div class="spotlight-item" data-id="1" data-name="Classic Tee" data-price="29.99" data-img="assets/img/spotlight1.jpg">
                 <div class="item-image">
                     <img src="assets/img/spotlight1.jpg" alt="Spotlight Product 1">
                     <button class="favorite-btn" aria-label="Favorite"><i class="far fa-heart"></i></button>
@@ -194,7 +1465,7 @@
                     </a>
                 </div>
             </div>
-            <div class="spotlight-item">
+            <div class="spotlight-item" data-id="2" data-name="Urban Hoodie" data-price="79.99" data-img="assets/img/spotlight2.jpg">
                 <div class="item-image">
                     <img src="assets/img/spotlight2.jpg" alt="Spotlight Product 2">
                     <button class="favorite-btn" aria-label="Favorite"><i class="far fa-heart"></i></button>
@@ -217,7 +1488,7 @@
                     </a>
                 </div>
             </div>
-            <div class="spotlight-item">
+            <div class="spotlight-item" data-id="3" data-name="Signature Cap" data-price="24.99" data-img="assets/img/spotlight3.jpeg">
                 <div class="item-image">
                     <img src="assets/img/spotlight3.jpeg" alt="Spotlight Product 3">
                     <button class="favorite-btn" aria-label="Favorite"><i class="far fa-heart"></i></button>
@@ -240,7 +1511,7 @@
                     </a>
                 </div>
             </div>
-            <div class="spotlight-item">
+            <div class="spotlight-item" data-id="4" data-name="Long Sleeve" data-price="39.99" data-img="assets/img/spotlight4.jpg">
                 <div class="item-image">
                     <img src="assets/img/spotlight4.jpg" alt="Spotlight Product 4">
                     <button class="favorite-btn" aria-label="Favorite"><i class="far fa-heart"></i></button>
@@ -263,7 +1534,7 @@
                     </a>
                 </div>
             </div>
-            <div class="spotlight-item">
+            <div class="spotlight-item" data-id="5" data-name="Zipper Hoodie" data-price="84.99" data-img="assets/img/spotlight5.jpg">
                 <div class="item-image">
                     <img src="assets/img/spotlight5.jpg" alt="Spotlight Product 5">
                     <button class="favorite-btn" aria-label="Favorite"><i class="far fa-heart"></i></button>
@@ -286,7 +1557,7 @@
                     </a>
                 </div>
             </div>
-            <div class="spotlight-item">
+            <div class="spotlight-item" data-id="6" data-name="Patch Beanie" data-price="22.99" data-img="assets/img/spotlight6.jpg">
                 <div class="item-image">
                     <img src="assets/img/spotlight6.jpg" alt="Spotlight Product 6">
                     <button class="favorite-btn" aria-label="Favorite"><i class="far fa-heart"></i></button>
@@ -309,7 +1580,7 @@
                     </a>
                 </div>
             </div>
-            <div class="spotlight-item">
+            <div class="spotlight-item" data-id="7" data-name="Graphic Tee" data-price="34.99" data-img="assets/img/spotlight7.jpg">
                 <div class="item-image">
                     <img src="assets/img/spotlight7.jpg" alt="Spotlight Product 7">
                     <button class="favorite-btn" aria-label="Favorite"><i class="far fa-heart"></i></button>
@@ -332,7 +1603,7 @@
                     </a>
                 </div>
             </div>
-            <div class="spotlight-item">
+            <div class="spotlight-item" data-id="8" data-name="Polo Shirt" data-price="49.99" data-img="assets/img/spotlight8.jpg">
                 <div class="item-image">
                     <img src="assets/img/spotlight8.jpg" alt="Spotlight Product 8">
                     <button class="favorite-btn" aria-label="Favorite"><i class="far fa-heart"></i></button>
@@ -355,7 +1626,7 @@
                     </a>
                 </div>
             </div>
-            <div class="spotlight-item">
+            <div class="spotlight-item" data-id="9" data-name="Velcro Hat" data-price="27.99" data-img="assets/img/spotlight9.jpg">
                 <div class="item-image">
                     <img src="assets/img/spotlight9.jpg" alt="Spotlight Product 9">
                     <button class="favorite-btn" aria-label="Favorite"><i class="far fa-heart"></i></button>
@@ -378,7 +1649,6 @@
                     </a>
                 </div>
             </div>
-            <!-- End of repeated item -->
         </div>
     </section>
 
@@ -394,7 +1664,6 @@
                 </div>
             </div>
             <div class="carousel-slide">
-                <!-- <video autoplay muted loop playsinline src="assets/vid/carousel-video.mp4" aria-label="Promotional video for Dotlyne"></video> -->
                  <img src="assets/img/background.jpg" alt="Dotlyne collection">
                  <div class="slide-content">
                     <h1>Autumn/Winter '25</h1>
@@ -417,6 +1686,473 @@
         <p id="copyright"></p>
     </footer>
 
-    <script src="assets/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // ==========================================
+            // CORE CART STATE
+            // ==========================================
+            let cart = [];
+            const AVAILABLE_SIZES = ['S', 'M', 'L', 'XL', 'XXL'];
+
+            // Format Currency
+            const formatCurrency = (amount) => {
+                return '$' + parseFloat(amount).toFixed(2);
+            };
+
+            // ==========================================
+            // UI ELEMENTS
+            // ==========================================
+            const cartIcon = document.getElementById('cart-icon');
+            const cartCountBadge = document.getElementById('cart-count');
+            const sideCart = document.getElementById('side-cart');
+            const closeCartBtn = document.getElementById('close-cart');
+            const cartBackdrop = document.getElementById('cart-backdrop');
+            const continueShoppingBtn = document.getElementById('continue-shopping-btn');
+            const checkoutButton = document.getElementById('checkout-button');
+            const cartItemsContainer = document.getElementById('cart-items-container');
+            const subtotalEl = document.getElementById('subtotal-amount');
+            const emptyMessage = document.querySelector('.empty-cart-message');
+            
+            // Checkout Views
+            const cartViewItems = document.getElementById('cart-view-items');
+            const cartViewCheckout = document.getElementById('cart-view-checkout');
+            const cartTitle = document.getElementById('cart-title');
+            const backToCartHeaderBtn = document.getElementById('back-to-cart-header');
+            const backToCartFooterBtn = document.getElementById('back-to-cart-btn');
+            const checkoutTotalEl = document.getElementById('checkout-total-amount');
+            const placeOrderBtn = document.getElementById('place-order-btn');
+            
+            // Country Select
+            const countrySelect = document.getElementById('country-code-select');
+            const countryCodes = [ 
+                { name: 'Afghanistan', code: '93', iso: 'AF' }, { name: 'Albania', code: '355', iso: 'AL' }, { name: 'Algeria', code: '213', iso: 'DZ' }, { name: 'American Samoa', code: '1-684', iso: 'AS' }, { name: 'Andorra', code: '376', iso: 'AD' }, { name: 'Angola', code: '244', iso: 'AO' }, { name: 'Anguilla', code: '1-264', iso: 'AI' }, { name: 'Antarctica', code: '672', iso: 'AQ' }, { name: 'Antigua and Barbuda', code: '1-268', iso: 'AG' }, { name: 'Argentina', code: '54', iso: 'AR' }, { name: 'Armenia', code: '374', iso: 'AM' }, { name: 'Aruba', code: '297', iso: 'AW' }, { name: 'Australia', code: '61', iso: 'AU' }, { name: 'Austria', code: '43', iso: 'AT' }, { name: 'Azerbaijan', code: '994', iso: 'AZ' }, { name: 'Bahamas', code: '1-242', iso: 'BS' }, { name: 'Bahrain', code: '973', iso: 'BH' }, { name: 'Bangladesh', code: '880', iso: 'BD' }, { name: 'Barbados', code: '1-246', iso: 'BB' }, { name: 'Belarus', code: '375', iso: 'BY' }, { name: 'Belgium', code: '32', iso: 'BE' }, { name: 'Belize', code: '501', iso: 'BZ' }, { name: 'Benin', code: '229', iso: 'BJ' }, { name: 'Bermuda', code: '1-441', iso: 'BM' }, { name: 'Bhutan', code: '975', iso: 'BT' }, { name: 'Bolivia', code: '591', iso: 'BO' }, { name: 'Bosnia and Herzegovina', code: '387', iso: 'BA' }, { name: 'Botswana', code: '267', iso: 'BW' }, { name: 'Brazil', code: '55', iso: 'BR' }, { name: 'British Indian Ocean Territory', code: '246', iso: 'IO' }, { name: 'British Virgin Islands', code: '1-284', iso: 'VG' }, { name: 'Brunei', code: '673', iso: 'BN' }, { name: 'Bulgaria', code: '359', iso: 'BG' }, { name: 'Burkina Faso', code: '226', iso: 'BF' }, { name: 'Burundi', code: '257', iso: 'BI' }, { name: 'Cambodia', code: '855', iso: 'KH' }, { name: 'Cameroon', code: '237', iso: 'CM' }, { name: 'Canada', code: '1', iso: 'CA' }, { name: 'Cape Verde', code: '238', iso: 'CV' }, { name: 'Cayman Islands', code: '1-345', iso: 'KY' }, { name: 'Central African Republic', code: '236', iso: 'CF' }, { name: 'Chad', code: '235', iso: 'TD' }, { name: 'Chile', code: '56', iso: 'CL' }, { name: 'China', code: '86', iso: 'CN' }, { name: 'Christmas Island', code: '61', iso: 'CX' }, { name: 'Cocos Islands', code: '61', iso: 'CC' }, { name: 'Colombia', code: '57', iso: 'CO' }, { name: 'Comoros', code: '269', iso: 'KM' }, { name: 'Cook Islands', code: '682', iso: 'CK' }, { name: 'Costa Rica', code: '506', iso: 'CR' }, { name: 'Croatia', code: '385', iso: 'HR' }, { name: 'Cuba', code: '53', iso: 'CU' }, { name: 'Curacao', code: '599', iso: 'CW' }, { name: 'Cyprus', code: '357', iso: 'CY' }, { name: 'Czech Republic', code: '420', iso: 'CZ' }, { name: 'Democratic Republic of the Congo', code: '243', iso: 'CD' }, { name: 'Denmark', code: '45', iso: 'DK' }, { name: 'Djibouti', code: '253', iso: 'DJ' }, { name: 'Dominica', code: '1-767', iso: 'DM' }, { name: 'Dominican Republic', code: '1-809', iso: 'DO' }, { name: 'East Timor', code: '670', iso: 'TL' }, { name: 'Ecuador', code: '593', iso: 'EC' }, { name: 'Egypt', code: '20', iso: 'EG' }, { name: 'El Salvador', code: '503', iso: 'SV' }, { name: 'Equatorial Guinea', code: '240', iso: 'GQ' }, { name: 'Eritrea', code: '291', iso: 'ER' }, { name: 'Estonia', code: '372', iso: 'EE' }, { name: 'Ethiopia', code: '251', iso: 'ET' }, { name: 'Falkland Islands', code: '500', iso: 'FK' }, { name: 'Faroe Islands', code: '298', iso: 'FO' }, { name: 'Fiji', code: '679', iso: 'FJ' }, { name: 'Finland', code: '358', iso: 'FI' }, { name: 'France', code: '33', iso: 'FR' }, { name: 'French Polynesia', code: '689', iso: 'PF' }, { name: 'Gabon', code: '241', iso: 'GA' }, { name: 'Gambia', code: '220', iso: 'GM' }, { name: 'Georgia', code: '995', iso: 'GE' }, { name: 'Germany', code: '49', iso: 'DE' }, { name: 'Ghana', code: '233', iso: 'GH' }, { name: 'Gibraltar', code: '350', iso: 'GI' }, { name: 'Greece', code: '30', iso: 'GR' }, { name: 'Greenland', code: '299', iso: 'GL' }, { name: 'Grenada', code: '1-473', iso: 'GD' }, { name: 'Guam', code: '1-671', iso: 'GU' }, { name: 'Guatemala', code: '502', iso: 'GT' }, { name: 'Guernsey', code: '44-1481', iso: 'GG' }, { name: 'Guinea', code: '224', iso: 'GN' }, { name: 'Guinea-Bissau', code: '245', iso: 'GW' }, { name: 'Guyana', code: '592', iso: 'GY' }, { name: 'Haiti', code: '509', iso: 'HT' }, { name: 'Honduras', code: '504', iso: 'HN' }, { name: 'Hong Kong', code: '852', iso: 'HK' }, { name: 'Hungary', code: '36', iso: 'HU' }, { name: 'Iceland', code: '354', iso: 'IS' }, { name: 'India', code: '91', iso: 'IN' }, { name: 'Indonesia', code: '62', iso: 'ID' }, { name: 'Iran', code: '98', iso: 'IR' }, { name: 'Iraq', code: '964', iso: 'IQ' }, { name: 'Ireland', code: '353', iso: 'IE' }, { name: 'Isle of Man', code: '44-1624', iso: 'IM' }, { name: 'Occupied Palestinian Territories', code: '972', iso: 'PS' }, { name: 'Italy', code: '39', iso: 'IT' }, { name: 'Ivory Coast', code: '225', iso: 'CI' }, { name: 'Jamaica', code: '1-876', iso: 'JM' }, { name: 'Japan', code: '81', iso: 'JP' }, { name: 'Jersey', code: '44-1534', iso: 'JE' }, { name: 'Jordan', code: '962', iso: 'JO' }, { name: 'Kazakhstan', code: '7', iso: 'KZ' }, { name: 'Kenya', code: '254', iso: 'KE' }, { name: 'Kiribati', code: '686', iso: 'KI' }, { name: 'Kosovo', code: '383', iso: 'XK' }, { name: 'Kuwait', code: '965', iso: 'KW' }, { name: 'Kyrgyzstan', code: '996', iso: 'KG' }, { name: 'Laos', code: '856', iso: 'LA' }, { name: 'Latvia', code: '371', iso: 'LV' }, { name: 'Lebanon', code: '961', iso: 'LB' }, { name: 'Lesotho', code: '266', iso: 'LS' }, { name: 'Liberia', code: '231', iso: 'LR' }, { name: 'Libya', code: '218', iso: 'LY' }, { name: 'Liechtenstein', code: '423', iso: 'LI' }, { name: 'Lithuania', code: '370', iso: 'LT' }, { name: 'Luxembourg', code: '352', iso: 'LU' }, { name: 'Macau', code: '853', iso: 'MO' }, { name: 'Macedonia', code: '389', iso: 'MK' }, { name: 'Madagascar', code: '261', iso: 'MG' }, { name: 'Malawi', code: '265', iso: 'MW' }, { name: 'Malaysia', code: '60', iso: 'MY' }, { name: 'Maldives', code: '960', iso: 'MV' }, { name: 'Mali', code: '223', iso: 'ML' }, { name: 'Malta', code: '356', iso: 'MT' }, { name: 'Marshall Islands', code: '692', iso: 'MH' }, { name: 'Mauritania', code: '222', iso: 'MR' }, { name: 'Mauritius', code: '230', iso: 'MU' }, { name: 'Mayotte', code: '262', iso: 'YT' }, { name: 'Mexico', code: '52', iso: 'MX' }, { name: 'Micronesia', code: '691', iso: 'FM' }, { name: 'Moldova', code: '373', iso: 'MD' }, { name: 'Monaco', code: '377', iso: 'MC' }, { name: 'Mongolia', code: '976', iso: 'MN' }, { name: 'Montenegro', code: '382', iso: 'ME' }, { name: 'Montserrat', code: '1-664', iso: 'MS' }, { name: 'Morocco', code: '212', iso: 'MA' }, { name: 'Mozambique', code: '258', iso: 'MZ' }, { name: 'Myanmar', code: '95', iso: 'MM' }, { name: 'Namibia', code: '264', iso: 'NA' }, { name: 'Nauru', code: '674', iso: 'NR' }, { name: 'Nepal', code: '977', iso: 'NP' }, { name: 'Netherlands', code: '31', iso: 'NL' }, { name: 'Netherlands Antilles', code: '599', iso: 'AN' }, { name: 'New Caledonia', code: '687', iso: 'NC' }, { name: 'New Zealand', code: '64', iso: 'NZ' }, { name: 'Nicaragua', code: '505', iso: 'NI' }, { name: 'Niger', code: '227', iso: 'NE' }, { name: 'Nigeria', code: '234', iso: 'NG' }, { name: 'Niue', code: '683', iso: 'NU' }, { name: 'North Korea', code: '850', iso: 'KP' }, { name: 'Northern Mariana Islands', code: '1-670', iso: 'MP' }, { name: 'Norway', code: '47', iso: 'NO' }, { name: 'Oman', code: '968', iso: 'OM' }, { name: 'Pakistan', code: '92', iso: 'PK' }, { name: 'Palau', code: '680', iso: 'PW' }, { name: 'Panama', code: '507', iso: 'PA' }, { name: 'Papua New Guinea', code: '675', iso: 'PG' }, { name: 'Paraguay', code: '595', iso: 'PY' }, { name: 'Peru', code: '51', iso: 'PE' }, { name: 'Philippines', code: '63', iso: 'PH' }, { name: 'Pitcairn', code: '64', iso: 'PN' }, { name: 'Poland', code: '48', iso: 'PL' }, { name: 'Portugal', code: '351', iso: 'PT' }, { name: 'Puerto Rico', code: '1-787', iso: 'PR' }, { name: 'Qatar', code: '974', iso: 'QA' }, { name: 'Republic of the Congo', code: '242', iso: 'CG' }, { name: 'Reunion', code: '262', iso: 'RE' }, { name: 'Romania', code: '40', iso: 'RO' }, { name: 'Russia', code: '7', iso: 'RU' }, { name: 'Rwanda', code: '250', iso: 'RW' }, { name: 'Saint Barthelemy', code: '590', iso: 'BL' }, { name: 'Saint Helena', code: '290', iso: 'SH' }, { name: 'Saint Kitts and Nevis', code: '1-869', iso: 'KN' }, { name: 'Saint Lucia', code: '1-758', iso: 'LC' }, { name: 'Saint Martin', code: '590', iso: 'MF' }, { name: 'Saint Pierre and Miquelon', code: '508', iso: 'PM' }, { name: 'Saint Vincent and the Grenadines', code: '1-784', iso: 'VC' }, { name: 'Samoa', code: '685', iso: 'WS' }, { name: 'San Marino', code: '378', iso: 'SM' }, { name: 'Sao Tome and Principe', code: '239', iso: 'ST' }, { name: 'Saudi Arabia', code: '966', iso: 'SA' }, { name: 'Senegal', code: '221', iso: 'SN' }, { name: 'Serbia', code: '381', iso: 'RS' }, { name: 'Seychelles', code: '248', iso: 'SC' }, { name: 'Sierra Leone', code: '232', iso: 'SL' }, { name: 'Singapore', code: '65', iso: 'SG' }, { name: 'Sint Maarten', code: '1-721', iso: 'SX' }, { name: 'Slovakia', code: '421', iso: 'SK' }, { name: 'Slovenia', code: '386', iso: 'SI' }, { name: 'Solomon Islands', code: '677', iso: 'SB' }, { name: 'Somalia', code: '252', iso: 'SO' }, { name: 'South Africa', code: '27', iso: 'ZA' }, { name: 'South Korea', code: '82', iso: 'KR' }, { name: 'South Sudan', code: '211', iso: 'SS' }, { name: 'Spain', code: '34', iso: 'ES' }, { name: 'Sri Lanka', code: '94', iso: 'LK' }, { name: 'Sudan', code: '249', iso: 'SD' }, { name: 'Suriname', code: '597', iso: 'SR' }, { name: 'Svalbard and Jan Mayen', code: '47', iso: 'SJ' }, { name: 'Swaziland', code: '268', iso: 'SZ' }, { name: 'Sweden', code: '46', iso: 'SE' }, { name: 'Switzerland', code: '41', iso: 'CH' }, { name: 'Syria', code: '963', iso: 'SY' }, { name: 'Taiwan', code: '886', iso: 'TW' }, { name: 'Tajikistan', code: '992', iso: 'TJ' }, { name: 'Tanzania', code: '255', iso: 'TZ' }, { name: 'Thailand', code: '66', iso: 'TH' }, { name: 'Togo', code: '228', iso: 'TG' }, { name: 'Tokelau', code: '690', iso: 'TK' }, { name: 'Tonga', code: '676', iso: 'TO' }, { name: 'Trinidad and Tobago', code: '1-868', iso: 'TT' }, { name: 'Tunisia', code: '216', iso: 'TN' }, { name: 'Turkey', code: '90', iso: 'TR' }, { name: 'Turkmenistan', code: '993', iso: 'TM' }, { name: 'Turks and Caicos Islands', code: '1-649', iso: 'TC' }, { name: 'Tuvalu', code: '688', iso: 'TV' }, { name: 'U.S. Virgin Islands', code: '1-340', iso: 'VI' }, { name: 'Uganda', code: '256', iso: 'UG' }, { name: 'Ukraine', code: '380', iso: 'UA' }, { name: 'United Arab Emirates', code: '971', iso: 'AE' }, { name: 'United Kingdom', code: '44', iso: 'GB' }, { name: 'United States', code: '1', iso: 'US' }, { name: 'Uruguay', code: '598', iso: 'UY' }, { name: 'Uzbekistan', code: '998', iso: 'UZ' }, { name: 'Vanuatu', code: '678', iso: 'VU' }, { name: 'Vatican', code: '379', iso: 'VA' }, { name: 'Venezuela', code: '58', iso: 'VE' }, { name: 'Vietnam', code: '84', iso: 'VN' }, { name: 'Wallis and Futuna', code: '681', iso: 'WF' }, { name: 'Western Sahara', code: '212', iso: 'EH' }, { name: 'Yemen', code: '967', iso: 'YE' }, { name: 'Zambia', code: '260', iso: 'ZM' }, { name: 'Zimbabwe', code: '263', iso: 'ZW' }
+            ];
+
+            // Populate Country Select
+            if(countrySelect) {
+                countryCodes.forEach(country => {
+                    const option = document.createElement('option');
+                    option.value = country.code;
+                    // Format: "LB (+961)"
+                    option.textContent = `${country.iso} (+${country.code})`;
+                    
+                    // Set Lebanon as default
+                    if(country.iso === 'LB') {
+                        option.selected = true;
+                    }
+                    countrySelect.appendChild(option);
+                });
+            }
+
+            // ==========================================
+            // CART LOGIC
+            // ==========================================
+
+            // Update Cart Count Badge
+            const updateCartCount = () => {
+                const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+                cartCountBadge.textContent = totalItems;
+                if(totalItems > 0) {
+                    cartCountBadge.classList.add('visible');
+                } else {
+                    cartCountBadge.classList.remove('visible');
+                }
+            };
+
+            // Update UI (Render Items & Subtotal)
+            const updateCartUI = () => {
+                cartItemsContainer.innerHTML = '';
+                let total = 0;
+
+                if (cart.length === 0) {
+                    emptyMessage.classList.add('active');
+                    checkoutButton.classList.add('disabled');
+                    checkoutButton.setAttribute('aria-disabled', 'true');
+                } else {
+                    emptyMessage.classList.remove('active');
+                    checkoutButton.classList.remove('disabled');
+                    checkoutButton.setAttribute('aria-disabled', 'false');
+
+                    cart.forEach((item, index) => {
+                        const itemTotal = item.price * item.quantity;
+                        total += itemTotal;
+
+                        const itemEl = document.createElement('div');
+                        itemEl.classList.add('cart-item');
+                        
+                        // Create size options for dropdown
+                        let sizeOptionsHtml = '';
+                        AVAILABLE_SIZES.forEach(s => {
+                            sizeOptionsHtml += `<option value="${s}" ${s === item.size ? 'selected' : ''}>${s}</option>`;
+                        });
+
+                        itemEl.innerHTML = `
+                            <img src="${item.img}" alt="${item.name}">
+                            <div class="cart-item-details">
+                                <div>
+                                    <h4>${item.name}</h4>
+                                    <p>${formatCurrency(item.price)}</p>
+                                </div>
+                                <div class="cart-controls">
+                                    <div class="qty-control">
+                                        <button class="qty-btn minus" data-index="${index}">-</button>
+                                        <span class="qty-val">${item.quantity}</span>
+                                        <button class="qty-btn plus" data-index="${index}">+</button>
+                                    </div>
+                                    <select class="size-select-cart" data-index="${index}">
+                                        ${sizeOptionsHtml}
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="remove-item-btn" data-index="${index}">&times;</button>
+                        `;
+                        cartItemsContainer.appendChild(itemEl);
+                    });
+                }
+
+                subtotalEl.textContent = formatCurrency(total);
+                checkoutTotalEl.textContent = formatCurrency(total);
+                updateCartCount();
+            };
+
+            // Event Delegation for Cart Actions (Remove, Qty, Size)
+            cartItemsContainer.addEventListener('click', (e) => {
+                const index = parseInt(e.target.dataset.index);
+                
+                if (e.target.classList.contains('remove-item-btn')) {
+                    cart.splice(index, 1);
+                    updateCartUI();
+                } else if (e.target.classList.contains('minus')) {
+                    if (cart[index].quantity > 1) {
+                        cart[index].quantity--;
+                    } else {
+                        cart.splice(index, 1);
+                    }
+                    updateCartUI();
+                } else if (e.target.classList.contains('plus')) {
+                    cart[index].quantity++;
+                    updateCartUI();
+                }
+            });
+
+            // Event Listener for Size Change in Cart
+            cartItemsContainer.addEventListener('change', (e) => {
+                if(e.target.classList.contains('size-select-cart')) {
+                    const index = parseInt(e.target.dataset.index);
+                    const newSize = e.target.value;
+                    cart[index].size = newSize;
+                }
+            });
+
+
+            // ==========================================
+            // ADD TO CART FUNCTIONALITY
+            // ==========================================
+            const itemActions = document.querySelectorAll('.item-actions');
+
+            itemActions.forEach(action => {
+                action.addEventListener('click', (event) => {
+                    // Prevent adding if clicking size or view btn
+                    if (event.target.closest('.size-option, .view-item-btn') || action.classList.contains('is-adding')) {
+                        return;
+                    }
+
+                    const itemContainer = action.closest('.spotlight-item');
+                    if (!itemContainer) return;
+
+                    // Gather Data
+                    const id = itemContainer.dataset.id;
+                    const name = itemContainer.dataset.name;
+                    const price = parseFloat(itemContainer.dataset.price);
+                    const img = itemContainer.dataset.img;
+                    
+                    // Get Active Size
+                    const sizeSelector = action.querySelector('.size-selector');
+                    const activeSizeBtn = sizeSelector.querySelector('.size-option.active');
+                    const size = activeSizeBtn ? activeSizeBtn.textContent.trim() : 'L'; // Default to L if issue
+
+                    // Add Logic
+                    const existingItem = cart.find(item => item.id === id && item.size === size);
+                    if (existingItem) {
+                        existingItem.quantity++;
+                    } else {
+                        cart.push({
+                            id, name, price, img, size, quantity: 1
+                        });
+                    }
+                    
+                    updateCartUI();
+
+                    // Animation
+                    action.classList.add('is-adding');
+                    const textSpan = action.querySelector('.add-to-cart-text');
+                    textSpan.style.opacity = 0;
+
+                    setTimeout(() => {
+                        action.classList.add('confirmed');
+                        textSpan.innerHTML = '<i class="fas fa-check"></i>';
+                        textSpan.style.opacity = 1;
+
+                        setTimeout(() => {
+                            textSpan.style.opacity = 0;
+
+                            setTimeout(() => {
+                                action.classList.remove('confirmed');
+                                textSpan.innerHTML = 'Add to Cart';
+                                textSpan.style.opacity = 1;
+                                action.classList.remove('is-adding');
+                            }, 300);
+
+                        }, 1200);
+
+                    }, 300);
+                });
+            });
+
+            // ==========================================
+            // SIDE CART OPEN/CLOSE UI
+            // ==========================================
+            if (cartIcon && sideCart && closeCartBtn && cartBackdrop && continueShoppingBtn) {
+                const openCart = (e) => {
+                    if(e) e.preventDefault();
+                    sideCart.classList.add('is-active');
+                    cartBackdrop.classList.add('is-active');
+                    document.body.classList.add('no-scroll');
+                    
+                    // Reset to view items when opening
+                    showCartItemsView();
+                };
+
+                const closeCart = () => {
+                    sideCart.classList.remove('is-active');
+                    cartBackdrop.classList.remove('is-active');
+                    if (!document.querySelector('.search-overlay.is-active')) {
+                        document.body.classList.remove('no-scroll');
+                    }
+                };
+
+                cartIcon.addEventListener('click', openCart);
+                closeCartBtn.addEventListener('click', closeCart);
+                cartBackdrop.addEventListener('click', closeCart);
+                continueShoppingBtn.addEventListener('click', closeCart);
+            }
+
+            // ==========================================
+            // CHECKOUT FLOW & WHATSAPP GENERATION
+            // ==========================================
+            
+            function showCheckoutView() {
+                cartViewItems.classList.add('hidden');
+                cartViewCheckout.classList.remove('hidden');
+                cartTitle.textContent = "Checkout";
+                backToCartHeaderBtn.style.display = 'block';
+                checkFormValidity(); // Check state on view switch
+            }
+
+            function showCartItemsView() {
+                cartViewCheckout.classList.add('hidden');
+                cartViewItems.classList.remove('hidden');
+                cartTitle.textContent = "Your Cart";
+                backToCartHeaderBtn.style.display = 'none';
+            }
+
+            checkoutButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                if(cart.length > 0) {
+                    showCheckoutView();
+                }
+            });
+
+            backToCartHeaderBtn.addEventListener('click', showCartItemsView);
+            backToCartFooterBtn.addEventListener('click', showCartItemsView);
+
+            // === Form Validation Logic ===
+            const nameInput = document.getElementById('fullname');
+            const emailInput = document.getElementById('email');
+            const phoneInput = document.getElementById('phone');
+            const cityInput = document.getElementById('city');
+            const addressInput = document.getElementById('address');
+            
+            const formInputs = [nameInput, emailInput, phoneInput, cityInput, addressInput, countrySelect];
+
+            function checkFormValidity() {
+                const allFilled = formInputs.every(input => input.value.trim() !== '');
+                
+                if (allFilled) {
+                    placeOrderBtn.classList.remove('disabled');
+                    placeOrderBtn.removeAttribute('disabled');
+                } else {
+                    placeOrderBtn.classList.add('disabled');
+                    placeOrderBtn.setAttribute('disabled', 'true');
+                }
+            }
+
+            // Add listeners to all inputs
+            formInputs.forEach(input => {
+                input.addEventListener('input', checkFormValidity);
+                input.addEventListener('change', checkFormValidity); // For select dropdown
+            });
+
+            // Initial Check
+            checkFormValidity();
+
+
+            // Place Order
+            placeOrderBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if(placeOrderBtn.classList.contains('disabled')) return;
+
+                // Validate Form Values
+                const name = nameInput.value.trim();
+                const email = emailInput.value.trim();
+                const countryCode = countrySelect.value;
+                const phone = phoneInput.value.trim();
+                const city = cityInput.value.trim();
+                const address = addressInput.value.trim();
+
+                // Construct Cleaner Message
+                let message = `Hello Dotlyne, I'd like to place an order!\n\n`;
+                
+                message += `*Customer Details:*\n`;
+                message += `Name: ${name}\n`;
+                message += `Email: ${email}\n`;
+                message += `Phone: +${countryCode} ${phone}\n`;
+                message += `City: ${city}\n`;
+                message += `Address: ${address}\n\n`;
+                
+                message += `*Order Items:*\n`;
+                
+                cart.forEach(item => {
+                    message += `- ${item.quantity}x ${item.name} (${item.size})\n`;
+                });
+
+                // WhatsApp Link
+                const phoneNumber = "96170656471";
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+                // Open Link
+                window.open(whatsappUrl, '_blank');
+            });
+
+
+            // ==========================================
+            // GENERAL SITE LOGIC (Hamburger, Carousel, etc)
+            // ==========================================
+            
+            // Fullscreen Menu
+            const hamburgerMenu = document.getElementById('hamburger-menu');
+            const fullScreenMenu = document.getElementById('fullscreen-menu');
+
+            if (hamburgerMenu && fullScreenMenu) {
+                hamburgerMenu.addEventListener('click', () => {
+                    hamburgerMenu.classList.toggle('active');
+                    fullScreenMenu.classList.toggle('menu-open');
+                    
+                    if(!sideCart.classList.contains('is-active')) {
+                         document.body.classList.toggle('no-scroll');
+                    }
+                });
+            }
+
+            // Dropdowns
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const menuCategory = toggle.closest('.menu-category');
+                    if (menuCategory) {
+                        menuCategory.classList.toggle('is-open');
+                        const isOpen = menuCategory.classList.contains('is-open');
+                        toggle.setAttribute('aria-expanded', isOpen);
+                    }
+                });
+            });
+
+            // Search Overlay
+            const searchIcon = document.getElementById('search-icon');
+            const searchOverlay = document.getElementById('search-overlay');
+            const closeSearchBtn = document.getElementById('close-search');
+
+            if (searchIcon && searchOverlay && closeSearchBtn) {
+                searchIcon.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    searchOverlay.classList.add('is-active');
+                    document.body.classList.add('no-scroll');
+                });
+
+                closeSearchBtn.addEventListener('click', () => {
+                    searchOverlay.classList.remove('is-active');
+                    if (!document.querySelector('.side-cart.is-active')) {
+                        document.body.classList.remove('no-scroll');
+                    }
+                });
+            }
+
+            // Copyright
+            const verticalCopyright = document.getElementById('vertical-copyright');
+            const mainCopyright = document.getElementById('copyright');
+            const copyrightText = `© ${new Date().getFullYear()} Dotlyne. All Rights Reserved.`;
+
+            if (mainCopyright) mainCopyright.textContent = copyrightText;
+            if (verticalCopyright) verticalCopyright.textContent = copyrightText;
+
+            // Carousel
+            const slidesContainer = document.querySelector('.carousel-slides');
+            const slides = document.querySelectorAll('.carousel-slide');
+            const nextBtn = document.querySelector('.next-btn');
+            const prevBtn = document.querySelector('.prev-btn');
+
+            if (slidesContainer && slides.length > 0 && nextBtn && prevBtn) {
+                let currentIndex = 0;
+                const totalSlides = slides.length;
+
+                const goToSlide = (slideIndex) => {
+                    slidesContainer.style.transform = `translateX(-${slideIndex * 100}%)`;
+                    currentIndex = slideIndex;
+                };
+
+                nextBtn.addEventListener('click', () => {
+                    const nextIndex = (currentIndex + 1) % totalSlides;
+                    goToSlide(nextIndex);
+                });
+
+                prevBtn.addEventListener('click', () => {
+                    const prevIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                    goToSlide(prevIndex);
+                });
+            }
+
+            // Favorite Button Toggle
+            const favoriteButtons = document.querySelectorAll('.favorite-btn');
+            favoriteButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    const icon = button.querySelector('i');
+                    icon.classList.toggle('far');
+                    icon.classList.toggle('fas');
+                });
+            });
+
+            // Size Selector Toggle (UI Only)
+            const sizeSelectors = document.querySelectorAll('.size-selector');
+            sizeSelectors.forEach(selector => {
+                selector.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    const clickedElement = event.target;
+                    
+                    if (clickedElement.classList.contains('size-option')) {
+                        const sizeOptions = selector.querySelectorAll('.size-option');
+                        sizeOptions.forEach(option => {
+                            option.classList.remove('active');
+                        });
+                        clickedElement.classList.add('active');
+                    }
+                });
+            });
+
+            // Initial UI check
+            updateCartUI();
+        });
+    </script>
 </body>
 </html>
